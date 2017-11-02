@@ -9,7 +9,7 @@ from . import check_grid_headers
 
 @pytest.fixture(scope='class')
 @pytest.mark.usefixtures("dbsession")
-def insertRolesTestData(dbsession):
+def insert_roles_test_data(dbsession):
     from c2cgeoportal_commons.models.main import Role, Functionality, RestrictionArea
     dbsession.begin_nested()
 
@@ -48,8 +48,8 @@ def insertRolesTestData(dbsession):
     dbsession.rollback()
 
 
-@pytest.mark.usefixtures("insertRolesTestData", "transact", "test_app")
-class TestRole():
+@pytest.mark.usefixtures("insert_roles_test_data", "transact", "test_app")
+class TestRole:
 
     def _role_by_name(self, dbsession, name):
         from c2cgeoportal_commons.models.main import Role

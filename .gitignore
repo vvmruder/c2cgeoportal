@@ -2,6 +2,8 @@
 *.pyc
 *.pyo
 **/__pycache__/
+/commons/c2cgeoportal_commons.egg-info/
+/commons/tests.yaml
 /geoportal/npm-packages
 /geoportal/tests/functional/test.ini
 /geoportal/tests/functional/alembic.ini
@@ -21,7 +23,6 @@
 /geoportal/c2cgeoportal_geoportal.egg-info/
 /admin/c2cgeoportal_admin/locale/
 /admin/c2cgeoportal_admin.egg-info/
-/commons/c2cgeoportal_commons.egg-info/
 /docker/test-mapserver/mapserver.map
 /doc/index.rst
 /dist/

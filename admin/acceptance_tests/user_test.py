@@ -10,7 +10,7 @@ from . import skip_if_travis, check_grid_headers
 
 @pytest.fixture(scope='class')
 @pytest.mark.usefixtures("dbsession")
-def insertUsersTestData(dbsession):
+def insert_users_test_data(dbsession):
     from c2cgeoportal_commons.models.static import User
     from c2cgeoportal_commons.models.main import Role
     dbsession.begin_nested()
@@ -28,7 +28,7 @@ def insertUsersTestData(dbsession):
     dbsession.rollback()
 
 
-@pytest.mark.usefixtures("insertUsersTestData", "transact", "test_app")
+@pytest.mark.usefixtures("insert_users_test_data", "transact", "test_app")
 class TestUser():
     def test_view_edit(self, dbsession, test_app):
         from c2cgeoportal_commons.models.static import User

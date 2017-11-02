@@ -10,10 +10,16 @@ RUN \
   curl --silent http://apt.dockerproject.org/gpg | apt-key add - && \
   echo "deb http://http.debian.net/debian jessie-backports main" > /etc/apt/sources.list.d/backport.list && \
   apt-get update && \
-  apt-get install --assume-yes --no-install-recommends nodejs docker-engine && \
+  apt-get install --assume-yes --no-install-recommends nodejs docker-engine firefox-esr && \
   apt-get install --assume-yes --no-install-recommends --target-release=jessie-backports openjdk-8-jre-headless && \
   apt-get clean && \
   rm --recursive --force /var/lib/apt/lists/*
+
+RUN \
+  curl --location https://github.com/mozilla/geckodriver/releases/download/v0.19.1/geckodriver-v0.19.1-linux64.tar.gz > geckodriver.tar.gz && \
+  tar --extract --gzip --file=geckodriver.tar.gz && \
+  mv geckodriver /usr/bin/ && \
+  rm geckodriver.tar.gz
 
 COPY requirements.txt fixversions.txt /tmp/
 
