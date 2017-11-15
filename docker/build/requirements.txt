@@ -5,7 +5,7 @@ boto==2.48.0  # Tile generation
 bottle==0.12.13  # i18n
 c2c.cssmin==0.7.dev6  # CGXP build
 c2c.template==1.5.1  # geoportal
-https://github.com/camptocamp/c2cgeoform/archive/491b5cc1e5e841d90dc97e4d356011e3d6e16f6e.zip#egg=c2cgeoform  # commons
+c2cgeoform==2.0.dev20171115  # commons
 codespell==1.10.0  # Lint
 ColanderAlchemy==0.3.3  # commons
 dateutils==0.6.6  # geoportal-pcreate
