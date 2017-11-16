@@ -36,6 +36,7 @@ timeout(time: 2, unit: 'HOURS') {
             stage('Build build Docker image') {
                 checkout scm
                 sh "docker build --tag camptocamp/geomapfish-build-dev:${MAJOR_VERSION} docker/build"
+                sh './docker-run ls /usr/local/lib/python3.6/site-packages/c2cgeoform/templates/navigation.jinja2'
             }
             stage('Build') {
                 checkout scm
@@ -47,7 +48,9 @@ timeout(time: 2, unit: 'HOURS') {
                 checkout scm
                 sh "docker build --build-arg=MAJOR_VERSION=${MAJOR_VERSION} --tag camptocamp/geomapfish-commons:${MAJOR_VERSION} commons"
                 sh "./docker-run --image=camptocamp/geomapfish-commons grep ${MAJOR_VERSION} /opt/c2cgeoportal_commons/c2cgeoportal_commons.egg-info/PKG-INFO"
+                sh './docker-run --image=camptocamp/geomapfish-commons ls /usr/local/lib/python3.6/site-packages/c2cgeoform/templates/navigation.jinja2'
                 sh "docker build --tag camptocamp/geomapfish-admin-dev:${MAJOR_VERSION} docker/admin-dev"
+                sh './docker-run --image=camptocamp/geomapfish-admin-dev ls /usr/local/lib/python3.6/site-packages/c2cgeoform/templates/navigation.jinja2'
                 sh 'docker build --tag=camptocamp/c2cgeoportal-gis-db:latest docker/gis-db'
                 sh 'docker build --tag=camptocamp/c2cgeoportal-test-mapserver:latest docker/test-mapserver'
             }
@@ -82,6 +85,7 @@ timeout(time: 2, unit: 'HOURS') {
                     geoportal/tests/functional/alembic.ini \
                     docker/test-mapserver/mapserver.map prepare-tests'''
                 sh 'docker-compose rm --stop --force'
+                sh './docker-run --image=camptocamp/geomapfish-admin-dev ls /usr/local/lib/python3.6/site-packages/c2cgeoform/templates/navigation.jinja2'
                 sh './docker-compose-run sleep 5'
                 sh './docker-compose-run alembic --config=geoportal/tests/functional/alembic.ini --name=main upgrade head'
                 sh './docker-compose-run alembic --config=geoportal/tests/functional/alembic.ini --name=static upgrade head'
