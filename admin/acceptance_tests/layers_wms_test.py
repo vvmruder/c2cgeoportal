@@ -8,7 +8,7 @@ from . import skip_if_travis, check_grid_headers
 
 @pytest.fixture(scope='class')
 @pytest.mark.usefixtures("dbsession")
-def insertLayerWMSTestData(dbsession):
+def insert_layer_WMS_test_data(dbsession):
     from c2cgeoportal_commons.models.main import \
         LayerWMS, OGCServer, RestrictionArea
 
@@ -35,7 +35,7 @@ def insertLayerWMSTestData(dbsession):
     dbsession.rollback()
 
 
-@pytest.mark.usefixtures("insertLayerWMSTestData", "transact", "test_app")
+@pytest.mark.usefixtures("insert_layer_WMS_test_data", "transact", "test_app")
 class TestLayerWMS():
 
     def test_view_index_rendering_in_app(self, test_app):
