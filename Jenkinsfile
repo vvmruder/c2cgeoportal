@@ -92,7 +92,9 @@ timeout(time: 2, unit: 'HOURS') {
                 try {
                     sh './docker-compose-run make tests'
                 } catch (Exception error) {
-                    sh 'cat /tmp/pytest-of-root/pytest-0/test_delete_selenium0/driver.log'
+                    sh 'ls -l /tmp/pytest-of-root/pytest-*/*/driver.log || true'
+                    sh 'ls -l /tmp/pytest-of-root/pytest-0/*/driver.log || true'
+                    sh 'cat /tmp/pytest-of-root/pytest-0/*/driver.log'
                     throw error
                 }
             }
