@@ -89,7 +89,13 @@ timeout(time: 2, unit: 'HOURS') {
                 sh './docker-compose-run sleep 5'
                 sh './docker-compose-run alembic --config=geoportal/tests/functional/alembic.ini --name=main upgrade head'
                 sh './docker-compose-run alembic --config=geoportal/tests/functional/alembic.ini --name=static upgrade head'
-                sh './docker-compose-run make tests'
+                try {
+                    sh './docker-compose-run make tests'
+                } catch (Exception error) {
+                    sh 'ls -l /tmp/pytest-of-root/pytest-*/test_delete_selenium*/driver.log'
+                    sh 'cat /tmp/pytest-of-root/pytest-0/test_delete_selenium0/driver.log'
+                    throw error
+                }
             }
             stage('Test Docker app') {
                 checkout scm
