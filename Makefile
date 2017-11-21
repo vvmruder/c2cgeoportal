@@ -152,8 +152,8 @@ tests:
 	py.test --cov=commons/c2cgeoportal_commons commons/acceptance_tests
 	py.test --cov=geoportal/c2cgeoportal_geoportal geoportal/tests
 	killall Xvfb || true
-	Xvfb :1 -screen 0 1024x768x16 &
-	py.test --driver=Firefox --cov=admin/c2cgeoportal_admin admin/acceptance_tests
+	Xvfb :0 -screen 0 1024x768x16 &
+	DISPLAY=:0 py.test --driver=Firefox --cov=admin/c2cgeoportal_admin admin/acceptance_tests
 	killall Xvfb
 
 $(BUILD_DIR)/db.timestamp: geoportal/tests/functional/alembic.ini
