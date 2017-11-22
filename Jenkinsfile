@@ -43,6 +43,7 @@ timeout(time: 2, unit: 'HOURS') {
                 sh './docker-run make clean-all'
                 sh './docker-run travis/empty-make help'
                 sh './docker-run pip freeze'
+                sh './docker-run cat /opt/c2cwsgiutils/c2cwsgiutils.egg-info/requires.txt'
                 sh './docker-run make build'
             }
             stage('Build CI Docker images') {
