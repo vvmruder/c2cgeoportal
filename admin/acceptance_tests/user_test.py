@@ -192,9 +192,9 @@ class TestUser():
 
         from selenium.webdriver.common.by import By
         from selenium.webdriver.support.ui import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
+        from selenium.webdriver.support import expected_conditions
         elem = WebDriverWait(selenium, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//div[@class='infos']")))
+            expected_conditions.presence_of_element_located((By.XPATH, "//div[@class='infos']")))
         assert 'Showing 1 to 10 of 23 entries' == elem.text
         elem = selenium.find_element_by_xpath("//button[@title='Refresh']/following-sibling::*")
         elem.click()
