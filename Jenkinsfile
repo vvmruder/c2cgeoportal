@@ -42,6 +42,7 @@ timeout(time: 2, unit: 'HOURS') {
                 checkout scm
                 sh './docker-run make clean-all'
                 sh './docker-run travis/empty-make help'
+                sh './docker-run pip freeze'
                 sh './docker-run make build'
             }
             stage('Build CI Docker images') {
