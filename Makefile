@@ -151,7 +151,7 @@ prepare-tests: $(BUILD_DIR)/requirements.timestamp \
 tests:
 	py.test --cov=commons/c2cgeoportal_commons commons/acceptance_tests
 	py.test --cov=geoportal/c2cgeoportal_geoportal geoportal/tests
-	py.test --driver=Chome --cov=admin/c2cgeoportal_admin admin/acceptance_tests
+	py.test --driver=Chrome --cov=admin/c2cgeoportal_admin admin/acceptance_tests
 
 $(BUILD_DIR)/db.timestamp: geoportal/tests/functional/alembic.ini
 	alembic --config=geoportal/tests/functional/alembic.ini --name=main upgrade head
