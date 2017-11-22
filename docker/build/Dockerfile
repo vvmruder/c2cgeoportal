@@ -3,7 +3,7 @@ LABEL maintainer Camptocamp "info@camptocamp.com"
 
 RUN \
   apt-get update && \
-  apt-get install --assume-yes --no-install-recommends tree apt-transport-https gettext sudo firefox-esr xvfb psmisc && \
+  apt-get install --assume-yes --no-install-recommends tree apt-transport-https gettext sudo chromium && \
   echo 'deb https://deb.nodesource.com/node_6.x jessie main' > /etc/apt/sources.list.d/nodesource.list && \
   curl --silent https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - && \
   echo "deb http://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list && \
@@ -14,12 +14,6 @@ RUN \
   apt-get install --assume-yes --no-install-recommends --target-release=jessie-backports openjdk-8-jre-headless && \
   apt-get clean && \
   rm --recursive --force /var/lib/apt/lists/*
-
-RUN \
-  curl --location https://github.com/mozilla/geckodriver/releases/download/v0.19.1/geckodriver-v0.19.1-linux64.tar.gz > geckodriver.tar.gz && \
-  tar --extract --gzip --file=geckodriver.tar.gz && \
-  mv geckodriver /usr/bin/ && \
-  rm geckodriver.tar.gz
 
 COPY requirements.txt fixversions.txt /tmp/
 
