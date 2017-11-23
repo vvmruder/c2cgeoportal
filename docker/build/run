@@ -40,6 +40,11 @@ try:
 except subprocess.CalledProcessError:
     del_user = False
 
+# Needed wen we run in docker-compose
+if not os.path.exists('/home/' + os.environ['USER_NAME']):
+    os.mkdir('/home/' + os.environ['USER_NAME'])
+    os.chown('/home/' + os.environ['USER_NAME'], os.environ['USER_ID'], os.environ['GROUP_ID'])
+
 # Be able to write in the build directory
 os.chmod(
     "/build",
