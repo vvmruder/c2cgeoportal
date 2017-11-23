@@ -26,10 +26,8 @@ RUN \
   rm -rf /tmp/chromedriver.zip
 
 COPY wrap_chrome_binary /opt/bin/wrap_chrome_binary
-COPY generate_config /opt/bin/generate_config
 RUN \
-  /opt/bin/wrap_chrome_binary && \
-  /opt/bin/generate_config > /opt/selenium/config.json
+  /opt/bin/wrap_chrome_binary
 
 COPY requirements.txt fixversions.txt /tmp/
 
