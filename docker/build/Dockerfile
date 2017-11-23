@@ -19,9 +19,9 @@ RUN \
 
 RUN \
   CHROME_DRIVER_VERSION=$(wget -qO- https://chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
-  curl https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip > /tmp/chromedriver.zip
+  curl https://chromedriver.storage.googleapis.com/${CHROME_DRIVER_VERSION}/chromedriver_linux64.zip > /tmp/chromedriver.zip && \
   unzip /tmp/chromedriver.zip -d /tmp/chromedriver/ && \
-  mv /tmp/chromedriver/chromedriver /usr/bin
+  mv /tmp/chromedriver/chromedriver /usr/bin &&\
   chmod 755 /usr/bin/chromedriver && \
   rm -rf /tmp/chromedriver.zip
 
