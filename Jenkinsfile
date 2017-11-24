@@ -126,7 +126,7 @@ timeout(time: 2, unit: 'HOURS') {
                 } finally {
                     sh 'travis/run-on.sh ${HOME}/workspace/testgeomapfish/ docker-compose down'
                 }
-                sh 'travis/run-on.sh ${HOME}/workspace/testgeomapfish/ ./docker-run travis/empty-make.sh --makefile=travis.mk build'
+                sh 'travis/run-on.sh ${HOME}/workspace/testgeomapfish/ ./docker-run travis/empty-make --makefile=travis.mk build'
                 sh 'travis/run-on.sh ${HOME}/workspace/testgeomapfish/ ./docker-run make --makefile=travis.mk checks'
                 sh '''find \
                     ${HOME}/workspace/testgeomapfish/geoportal/setup.py \
