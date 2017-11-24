@@ -75,6 +75,7 @@ def main():
         "SRID",
         "EXTENT",
         "APACHE_VHOST",
+        "CI",
     ]:
         docker_cmd.append("--env={}".format(env))
 

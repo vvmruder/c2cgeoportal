@@ -21,6 +21,7 @@ build:
     - USER_NAME
     - USER_ID
     - GROUP_ID
+    - CI
   stdin_open: true
   tty: true
   command: ${'$'}{RUN}
