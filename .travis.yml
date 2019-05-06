@@ -55,15 +55,10 @@ before_install:
 
 install:
 - if [ ${TRAVIS_PULL_REQUEST} != "false" ] ; then git fetch origin ${TRAVIS_BRANCH}:${TRAVIS_BRANCH}; fi
-- ./docker-run travis/no-make-error.sh . help
 - ./docker-run make -f travis.mk build
 
 - pip install sqlalchemy psycopg2
 - python travis/waitdb postgres://www-data:www-data@localhost/geomapfish_test
-
-- travis/create-new-project.sh
-- travis/test-upgrade.sh
-- travis/build-new-project.sh
 
 script:
 - uname --all
@@ -72,43 +67,7 @@ script:
 - python setup.py --version
 - docker version
 
-# test return code
-- travis/test-eof-newline
-- ./docker-compose-run true
-- |
-    if ./docker-compose-run false
-    then
-        false
-    fi
-# test new project
-- cd /tmp/travis/testgeomapfish
-- .build/venv/bin/pcreate --scaffold=c2cgeoportal_update --ignore-conflicting-name --overwrite /tmp/travis/testgeomapfish > /dev/null  # on upgrade - do not add any argument on this command
-- make -f travis.mk checks
-- cd $TRAVIS_FOLDER
-- travis/no-make-error.sh /tmp/travis/testgeomapfish -f travis.mk help
-- find /tmp/travis/testgeomapfish/setup.py /tmp/travis/testgeomapfish/testgeomapfish/*.py /tmp/travis/testgeomapfish/testgeomapfish/views -name \*.py | xargs travis/quote
-- travis/test-new-project wsgi/check_collector
-- travis/test-new-project wsgi/check_collector?type=all
-- travis/test-new-project wsgi/layers/test/values/type enum
-- travis/status.sh /tmp/travis/testgeomapfish/
-- travis/empty-make-new-project.sh
-- travis/no-make-error.sh /tmp/travis/testgeomapfish -f travis.mk build
-- cp travis/empty-vars.mk /tmp/travis/testgeomapfish/
-- travis/run-on.sh /tmp/travis/testgeomapfish/ 'make -f empty-vars.mk .build/config.yaml'
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic.ini upgrade head
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic_static.ini upgrade head
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic_static.ini downgrade base
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic.ini downgrade base
-
-# test c2cgeoportal
-- ./docker-run travis/empty-make.sh -f travis.mk build
-- ./docker-run travis/no-make-error.sh . -f travis.mk build
 - ./docker-run make -f travis.mk doc
-- ./docker-run make -f travis.mk checks
-- ./docker-run make -f travis.mk c2cgeoportal/tests/functional/alembic.ini
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic.ini upgrade head
-- ./docker-compose-run alembic --config c2cgeoportal/tests/functional/alembic_static.ini upgrade head
-- ./docker-compose-run nosetests
 
 after_success:
 - ./docker-run coveralls
@@ -133,30 +92,12 @@ before_deploy:
   fi
 
 deploy:
-- provider: pypi
-  user: sbrunner
-  password:
-    secure: dT4Z3Zk2SGq1BPl+mX2iI0ubK7veSPb1b0fGrKHpvC3gBxuGUDMhtHw5dgopdWWeUhZLzLoPpEZPyCHtJhE2vunGwZfmJXkrqp/yC1meszZpDgBkpRWzx62u/f1+FmUdGPukvlqTfzgl/vJwertPRzX9Y4hanoFIDQvIKnp37Ls=
-  skip_cleanup: true
-  skip_upload_docs: true
-  distributions: sdist bdist_wheel
-  on:
-    repo: camptocamp/c2cgeoportal
-    tags: true
-    condition: '"${TRAVIS_TAG}" =~ ^[0-9]+\.[0-9]+\..+$'
-- provider: script
-  script: ./docker-run make transifex-send
-  skip_cleanup: true
-  on:
-    repo: camptocamp/c2cgeoportal
-    branch: 2.2
-    condition: '"${TRAVIS_PULL_REQUEST}" = false'
 - provider: script
   script: travis/doc.sh
   skip_cleanup: true
   on:
     repo: camptocamp/c2cgeoportal
-    branch: 2.2
+    branch: doc22
     condition: '"${TRAVIS_PULL_REQUEST}" = false'
 
 notifications:
